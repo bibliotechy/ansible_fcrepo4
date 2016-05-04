@@ -1,0 +1,44 @@
+---
+# ROLE: hydra-stack
+# roles/hydra-stack/install/tasks/fedora.yml
+#
+- name: download fedora
+  become: yes
+  get_url:
+    url: {{ fedora_url }}
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    dest: "{{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war"
+    timeout: 100
+  tags:
+    - fcrepo4
+
+- name: make fedora data dir
+  file:
+    owner: "{{ tomcat_user }}"
+    group:  "{{ tomcat_user  }}"
+    state: directory
+    path: "{{ fedora_data_directory_path  }}"
+  become: yes
+  tags:
+    - fcrepo4
+
+- name: copy over fedora.war
+  become: yes
+  command: >
+    cp {{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war {{ tomcat_path }}/webapps/fedora.war
+    creates: "{{ tomcat_path }}/webapps/fedora.war"
+  notify: restart tomcat
+  tags:
+    - fcrepo4
+
+- name: create tomcat config and java options
+  become: yes
+  template:
+    src: tomcat7.j2
+    dest: /etc/default/tomcat7
+    backup: yes
+  notify: restart tomcat
+  tags:
+    - fcrepo4
+

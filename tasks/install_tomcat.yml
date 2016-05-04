@@ -1,0 +1,7 @@
+---
+
+- name: Install tomcat7
+  become: yes
+  package:
+    name: tomcat7
+    state: present

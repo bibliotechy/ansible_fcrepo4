@@ -1,0 +1,8 @@
+---
+
+- name: restart tomcat
+  become: yes
+  service:
+    name: "{{ tomcat_service_name  }}"
+    enabled: yes
+    state: restarted

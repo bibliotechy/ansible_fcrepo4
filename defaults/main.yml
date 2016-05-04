@@ -1,0 +1,14 @@
+---
+# defaults file for ansible_fcrepo4
+
+
+fedora_version: 4.5.1
+fedora_url: http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war
+
+install_path: /tmp
+
+fedora_data_directory_path: /opt/fedora-data
+
+tomcat_path: /var/lib/tomcat/
+tomcat_user: tomcat7
+tomcat_service_name: tomcat7
