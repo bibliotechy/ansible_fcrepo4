@@ -5,7 +5,7 @@
 - name: download fedora
   become: yes
   get_url:
-    url: {{ fedora_url }}
+    url: "{{ fedora_url }}"
     owner: "{{ ansible_ssh_user }}"
     group: "{{ ansible_ssh_user }}"
     dest: "{{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war"
@@ -23,20 +23,26 @@
   tags:
     - fcrepo4
 
+- name: check fedora.war
+  become: yes
+  stat: path=/var/lib/tomcat7/webapps/fedora.war
+  register: fedora_war
+
+
 - name: copy over fedora.war
   become: yes
-  command: >
+  shell: >
     cp {{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war {{ tomcat_path }}/webapps/fedora.war
-    creates: "{{ tomcat_path }}/webapps/fedora.war"
   notify: restart tomcat
+  when: fedora_war.stat.exists == False
   tags:
     - fcrepo4
 
 - name: create tomcat config and java options
   become: yes
   template:
-    src: tomcat7.j2
-    dest: /etc/default/tomcat7
+    src: tomcat.j2
+    dest: /etc/default/{{ tomcat_service_name }}
     backup: yes
   notify: restart tomcat
   tags:

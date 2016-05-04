@@ -1,0 +1,4 @@
+---
+
+- include: install_tomcat.yml
+- include: install_fedora.yml
