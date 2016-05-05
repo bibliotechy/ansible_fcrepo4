@@ -6,5 +6,5 @@
 - name: Install tomcat7
   become: yes
   package:
-    name: {{ tomcat_package_name }}
+    name: "{{ tomcat_package_name }}"
     state: present
