@@ -11,9 +11,9 @@ fedora_data_directory_path: /opt/fedora-data
 
 java_home: /usr/bin/java
 
-tomcat_service_name: tomcat7
-tomcat_path: "/var/lib/{{ tomcat_service_name }}"
-tomcat_user: "{{ tomcat_service_name }}"
+tomcat_path: "/var/lib/{{ tomcat_name }}"
+tomcat_config_path: /etc/{{ tomcat_name }}/Catalina/localhost
+
 tomcat_permgen_memory: 128M
 
 # tomcat min memory allocation
