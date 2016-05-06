@@ -34,7 +34,7 @@ script:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
 
   # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook}'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} -vvv'
 
   # Test role idempotence.
   - >
@@ -42,6 +42,12 @@ script:
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
+
+  # Print out the Tomcat logs for debugging
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm find /var/log/ -name "catalina.*" -exec cat "{}" ";" '
+
+  # Check the tomcat defaults
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm find /etc/default/ -name "tomcat*" -exec cat "{}" ";"'
 
   # Clean up
   - sudo docker stop "$(cat ${container_id})"
