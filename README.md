@@ -24,9 +24,8 @@ install_path: /opt/install
 fedora_data_directory_path: /opt/fedora-data
 
 # Tomcat Service Variables
-tomcat_service_name: tomcat7
+
 tomcat_path: "/var/lib/{{ tomcat_service_name }}"
-tomcat_user: "{{ tomcat_service_name }}"
 tomcat_config_path: /etc/{{ tomcat_service_name }}/Catalina/localhost
 
 # Tomcat java opts

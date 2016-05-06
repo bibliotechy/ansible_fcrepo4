@@ -15,8 +15,8 @@
 
 - name: make fedora data dir
   file:
-    owner: "{{ tomcat_user }}"
-    group:  "{{ tomcat_user  }}"
+    owner: "{{ tomcat_name }}"
+    group:  "{{ tomcat_name  }}"
     state: directory
     path: "{{ fedora_data_directory_path  }}"
   become: yes
@@ -25,7 +25,8 @@
 
 - name: check fedora.war
   become: yes
-  stat: path=/var/lib/tomcat7/webapps/fedora.war
+  stat:
+    path: "{{ tomcat_path }}/webapps/fedora.war"
   register: fedora_war
 
 
@@ -42,7 +43,7 @@
   become: yes
   template:
     src: tomcat.j2
-    dest: /etc/default/{{ tomcat_service_name }}
+    dest: /etc/default/{{ tomcat_name }}
     backup: yes
   notify: restart tomcat
   tags:
