@@ -4,4 +4,5 @@
   become: yes
   package:
     name: "{{ tomcat_name }}"
-    state: present
+    state: installed
+    update_cache: true

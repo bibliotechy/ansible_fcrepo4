@@ -1,7 +1,21 @@
 ---
 
 - hosts: localhost
+  become: yes
+  tasks:
+    - name: installing repo for Java 8 in Ubuntu
+      apt_repository: repo='ppa:openjdk-r/ppa'
+
+- hosts: localhost
+  become: yes
+  roles:
+    - role: geerlingguy.java
+      when: "ansible_os_family == 'Debian'"
+      java_packages:
+        - openjdk-8-jdk
+
+- hosts: localhost
   remote_user: root
   roles:
-    - role_under_test
+    - { role: role_under_test, tomcat_max_memory: 2048m}
 

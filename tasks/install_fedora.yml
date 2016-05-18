@@ -39,6 +39,20 @@
   tags:
     - fcrepo4
 
+- name: Determine java home
+  shell: >
+    readlink -f /usr/bin/javac | sed 's:/bin/javac::'
+  register: java_home_registered
+  changed_when: False
+  tags:
+    - fcrepo4
+
+- name: Set java_home variable
+  set_fact:
+    java_home: "{{ java_home_registered.stdout }}"
+  tags:
+    - fcrepo4
+
 - name: create tomcat config and java options
   become: yes
   template:

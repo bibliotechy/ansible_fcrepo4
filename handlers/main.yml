@@ -4,5 +4,5 @@
   become: yes
   service:
     name: "{{ tomcat_name  }}"
-    enabled: yes
     state: restarted
+    sleep: 10

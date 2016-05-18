@@ -11,7 +11,7 @@ Java 8 needs to be installed.
 Role Variables
 --------------
 
-'''yaml
+```yaml
 
 fedora_version: 4.5.1
 
@@ -44,7 +44,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: ansible_fcrepo4, fedora_version: 4.5.0 }
+         - ansible_fcrepo4
 
 License
 -------
