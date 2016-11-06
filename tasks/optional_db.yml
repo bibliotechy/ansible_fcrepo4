@@ -1,0 +1,36 @@
+---
+
+- name: make sure postgresql python deps met
+  package:
+    name: psycopg2
+    state: installed
+  become: yes
+  when: fedora_db == 'postgresql'
+
+- name: create fedora database in postgresql
+  postgresql_db:
+    name: fcrepo
+  become: yes
+  when: fedora_db == 'postgresql'
+
+- name: create postgresql user for fedora db
+  postgresql_user:
+    db: fcrepo
+    name: "{{ fedora_postgresql_db_user }}"
+    password: "{{ fedora_postgresql_db_password }}"
+    priv: ALL
+    state: present
+  become: yes
+  when: fedora_db == 'postgresql'
+
+- name: add fcrepo postgres config when needed
+  become: yes
+  file:
+    src: repository.json
+    dest: "{{ install_path }}/config/jdbc-postgresql/repository.json"
+    owner: "{{ tomcat_name }}"
+    group:  "{{ tomcat_name  }}"
+  when: fedora_db == 'postgresql'
+  notify: restart tomcat
+  tags:
+    - fcrepo4

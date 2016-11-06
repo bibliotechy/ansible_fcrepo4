@@ -3,5 +3,9 @@
 - name: Include OS-specific variables
   include_vars: "{{ ansible_os_family }}.yml"
 
+
+- include: install_optional_db.yml
+  when: fedora_db is not 'default'
+
 - include: install_tomcat.yml
 - include: install_fedora.yml
