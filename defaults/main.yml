@@ -2,8 +2,10 @@
 # defaults file for ansible_fcrepo4
 
 
-fedora_version: 4.5.1
+fedora_version: 4.7.0
 fedora_url: http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war
+
+fedora_db: default
 
 install_path: /tmp
 
@@ -18,3 +20,4 @@ tomcat_permgen_memory: 128M
 tomcat_min_memory: 512m
 # # tomcat max memory allocation
 tomcat_max_memory: 4096m
+
