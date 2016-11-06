@@ -5,7 +5,7 @@
 
 
 - include: optional_db.yml
-  when: fedora_db is not 'default'
+  when: fedora_db != "default"
 
 - include: install_tomcat.yml
 - include: install_fedora.yml
